@@ -1,0 +1,2 @@
+defmodule Genealogist do
+end
