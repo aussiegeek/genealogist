@@ -20,7 +20,9 @@ defmodule Genealogist.Mixfile do
   end
 
   defp deps do
-    []
+    [
+      {:dotex, ">= 0.0.0"},
+    ]
   end
 
   defp package do

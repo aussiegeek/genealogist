@@ -3,12 +3,6 @@ defmodule BuilderTest do
 
   alias Genealogist.{Builder}
 
-  setup_all do
-    {:ok, _pid} = Genealogist.PlacesSupervisor.start_link
-
-    :ok
-  end
-
   test "single supervisor with no registry or children" do
     {:ok, _pid} = Genealogist.EmptySupervisor.start_link
     assert Builder.tree(Genealogist.EmptySupervisor) == {[], [{:supervisor, [Genealogist.EmptySupervisor], []}]}
@@ -51,6 +45,19 @@ defmodule BuilderTest do
                    {:worker, [{:registry, Genealogist.Registry, "Cities!William Creek"}]},
                  ]
                 },
+              ]
+            },
+            {
+              :supervisor,
+              [Genealogist.CountriesSupervisor],
+              [
+                {:worker, [Genealogist.CountriesWorker]},
+                {:supervisor, [Genealogist.CountriesChildrenSupervisor],
+                 [
+                   {:worker, [{:registry, Genealogist.Registry, {:country, "Australia"}}]},
+                   {:worker, [{:registry, Genealogist.Registry, {:country, "New Zealand"}}]}
+                 ]
+                }
               ]
             }
           ]
