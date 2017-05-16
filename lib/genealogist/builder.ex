@@ -16,20 +16,12 @@ defmodule Genealogist.Builder do
   defp build_children(supervisor) do
     supervisor
     |> Supervisor.which_children
-    |> process_children
-    |> Enum.reverse
+    |> Enum.map(&process_child/1)
   end
 
-  defp process_children([]), do: []
-  defp process_children([{_id, pid, :worker, _modules}|t]) do
-    [{:worker, pid}|process_children(t)]
-  end
-  defp process_children([{Registry, pid, :supervisor, [Registry]}|_]) do
-    [{:registry, :erlang.process_info(pid)[:registered_name]}]
-  end
-  defp process_children([{_id, pid, :supervisor, _modules}|t]) do
-    [process_supervisor(pid)|process_children(t)]
-  end
+  defp process_child({_id, pid, :worker, _modules}), do: {:worker, pid}
+  defp process_child({Registry, pid, :supervisor, [Registry]}), do: {:registry, :erlang.process_info(pid)[:registered_name]}
+  defp process_child({_id, pid, :supervisor, _modules}), do: process_supervisor(pid)
 
   defp find_registries(tree), do: {Enum.reduce(tree, [], &find_registries/2), tree}
   defp find_registries({:registry, name}, registries), do: [name|registries]
@@ -39,20 +31,21 @@ defmodule Genealogist.Builder do
   end
 
 
-  defp add_names({supervisors, tree}) do
-    {supervisors, add_process_name(supervisors, tree)}
+  defp add_names({registries, tree}) do
+    {registries, add_process_name_to_children(registries, tree)}
   end
 
-  defp add_process_name(_registires, []), do: []
-  defp add_process_name(registries, [{:worker, pid}|t]) do
-    [{:worker, process_names(registries, pid)}|add_process_name(registries, t)]
+  defp add_process_name_to_children(registries, children) do
+    children
+    |> Enum.map(fn(child) -> add_process_name(registries, child) end)
+    |> Enum.reject(&is_nil/1)
   end
-  defp add_process_name(registries, [{:supervisor, pid, children}|t]) do
-    [{:supervisor, process_names(registries, pid), add_process_name(registries, children)}|add_process_name(registries, t)]
+
+  defp add_process_name(registries, {:worker, pid}), do: {:worker, process_names(registries, pid)}
+  defp add_process_name(registries, {:supervisor, pid, children}) do
+    {:supervisor, process_names(registries, pid), add_process_name_to_children(registries, children)}
   end
-  defp add_process_name(registries, [{:registry, _name}|t]) do
-    add_process_name(registries, t)
-  end
+  defp add_process_name(registries, {:registry, _name}), do: nil
 
   defp process_names(registries, pid) when is_pid(pid) do
     name = :erlang.process_info(pid)[:registered_name]
