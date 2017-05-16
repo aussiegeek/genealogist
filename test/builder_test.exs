@@ -22,12 +22,10 @@ defmodule BuilderTest do
           :supervisor,
           [Genealogist.CitiesSupervisor],
           [
+            {:worker, [Genealogist.CitiesWorker]},
             {:supervisor, [Genealogist.CitiesChildrenSupervisor],
-             [
-               {:worker, ["Untitled"]},
-             ]
+             [{:worker, ["Untitled"]},{:worker, ["Untitled"]}]
             },
-            {:worker, [Genealogist.CitiesWorker]}
           ]
         }
       ]
@@ -46,12 +44,13 @@ defmodule BuilderTest do
               :supervisor,
               [Genealogist.CitiesSupervisor],
               [
+                {:worker, [Genealogist.CitiesWorker]},
                 {:supervisor, [Genealogist.CitiesChildrenSupervisor],
                  [
                    {:worker, [{:registry, Genealogist.Registry, "Cities!Melbourne"}]},
+                   {:worker, [{:registry, Genealogist.Registry, "Cities!William Creek"}]},
                  ]
                 },
-                {:worker, [Genealogist.CitiesWorker]}
               ]
             }
           ]
