@@ -8,6 +8,7 @@ defmodule Genealogist.PlacesSupervisor do
   def init([]) do
     children = [
       supervisor(Registry, [:unique, Genealogist.Registry]),
+      supervisor(Genealogist.CountriesSupervisor, []),
       supervisor(Genealogist.CitiesSupervisor, []),
     ]
     supervise(children, strategy: :one_for_one)
