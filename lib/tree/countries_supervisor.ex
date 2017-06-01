@@ -1,4 +1,5 @@
 defmodule Genealogist.CountriesSupervisor do
+  @moduledoc nil
   use Supervisor
 
   def start_link do

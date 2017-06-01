@@ -1,4 +1,5 @@
 defmodule Genealogist.CitiesSupervisor do
+  @moduledoc nil
   use Supervisor
 
   def start_link do

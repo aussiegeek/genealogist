@@ -1,2 +1,4 @@
-%{"dotex": {:hex, :dotex, "0.1.0", "983154dd69a7bae9e47b9680d4b377dc8139ea85eece162a263b06795ee08790", [:mix], [{:temp, "~> 0.4", [hex: :temp, repo: "hexpm", optional: false]}], "hexpm"},
+%{"bunt": {:hex, :bunt, "0.2.0", "951c6e801e8b1d2cbe58ebbd3e616a869061ddadcc4863d0a2182541acae9a38", [:mix], [], "hexpm"},
+  "credo": {:hex, :credo, "0.8.0", "187ce36098afef67baa503d0bb3ec047953c88e4c662591371d15ae9ce150119", [:mix], [{:bunt, "~> 0.2.0", [hex: :bunt, repo: "hexpm", optional: false]}], "hexpm"},
+  "dotex": {:hex, :dotex, "0.1.0", "983154dd69a7bae9e47b9680d4b377dc8139ea85eece162a263b06795ee08790", [:mix], [{:temp, "~> 0.4", [hex: :temp, repo: "hexpm", optional: false]}], "hexpm"},
   "temp": {:hex, :temp, "0.4.3", "b641c3ce46094839bff110fdb64162536d640d9d47ca2c37add9104a2fa3bd81", [:mix], [], "hexpm"}}

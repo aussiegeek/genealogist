@@ -1,5 +1,9 @@
 defmodule Genealogist.Builder do
+  @moduledoc """
+  Interrogate a supervisor for all of it's descendants.
 
+  It finds the tree of all of it's children, finds any names use to name the children, and then lastly for any process registries found, it will go lookup it's names in those registries as well
+  """
   def tree(supervisor) do
     supervisor
     |> build_tree
@@ -30,7 +34,6 @@ defmodule Genealogist.Builder do
     Enum.reduce(children, registries, &find_registries/2)
   end
 
-
   defp add_names({registries, tree}) do
     {registries, add_process_name_to_children(registries, tree)}
   end
@@ -45,7 +48,7 @@ defmodule Genealogist.Builder do
   defp add_process_name(registries, {:supervisor, pid, children}) do
     {:supervisor, process_names(registries, pid), add_process_name_to_children(registries, children)}
   end
-  defp add_process_name(registries, {:registry, _name}), do: nil
+  defp add_process_name(_registries, {:registry, _name}), do: nil
 
   defp process_names(registries, pid) when is_pid(pid) do
     name = :erlang.process_info(pid)[:registered_name]

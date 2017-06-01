@@ -22,6 +22,7 @@ defmodule Genealogist.Mixfile do
   defp deps do
     [
       {:dotex, ">= 0.0.0"},
+      {:credo, "~> 0.8", only: [:dev, :test]},
     ]
   end
 

@@ -3,3 +3,7 @@ elixir:
   - 1.4.2
 otp_release:
   - 19.3
+script:
+  - MIX_ENV=test mix compile --warnings-as-errors
+  - MIX_ENV=test mix credo --strict
+  - MIX_ENV=test mix test
