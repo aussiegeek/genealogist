@@ -54,8 +54,8 @@ defmodule BuilderTest do
                 {:worker, [Genealogist.CountriesWorker]},
                 {:supervisor, [Genealogist.CountriesChildrenSupervisor],
                  [
+                   {:worker, [{:registry, Genealogist.Registry, {:country, "New Zealand"}}]},
                    {:worker, [{:registry, Genealogist.Registry, {:country, "Australia"}}]},
-                   {:worker, [{:registry, Genealogist.Registry, {:country, "New Zealand"}}]}
                  ]
                 }
               ]
