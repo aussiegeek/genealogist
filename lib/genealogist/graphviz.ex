@@ -5,6 +5,9 @@ defmodule Genealogist.Graphviz do
 
   alias Dotex.Graph
 
+  @doc """
+  Takes a tree from `Genealogist.Builder.tree/1` and generates a series a Graph that [Dotex](https://github.com/aussiegeek/dotex) can turn in to a Graphviz graph
+  """
   def graph({_registries, tree}) do
     anotated_nodes = add_nodes(tree)
     %Dotex.Graph{nodes: List.flatten(extract_nodes(anotated_nodes)), attributes: [rankdir: "LR"]}

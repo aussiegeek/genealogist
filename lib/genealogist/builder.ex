@@ -4,6 +4,13 @@ defmodule Genealogist.Builder do
 
   It finds the tree of all of it's children, finds any names use to name the children, and then lastly for any process registries found, it will go lookup it's names in those registries as well
   """
+
+  @doc """
+  Take a supervisor, fetch all of it's children, and any names they have in any registries found along the way
+
+  ## Attributes
+  * `supervisor` - the name of the top level supervisor
+  """
   def tree(supervisor) do
     supervisor
     |> build_tree

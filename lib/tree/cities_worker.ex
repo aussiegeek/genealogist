@@ -1,5 +1,5 @@
 defmodule Genealogist.CitiesWorker do
-  @moduledoc nil
+  @moduledoc false
   use GenServer
 
   def start_link, do: GenServer.start_link(__MODULE__, :ok, name: Genealogist.CitiesWorker)

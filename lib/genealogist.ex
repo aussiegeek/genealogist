@@ -6,6 +6,15 @@ defmodule Genealogist do
   """
 
   alias Genealogist.{Builder, Graphviz}
+
+  @doc """
+  Take a `Supervisor` and write a Graphviz representation of it to disk
+
+  ## Attributes
+  * `supervisor` - name of the supervisor to build a graph for
+  * `format` - atom representing the desired output format, (eg. :png, :svg, :dot)
+  * `filename` - path to write the graph to
+  """
   def write_graph(supervisor, format, filename) do
     supervisor
     |> Builder.tree()

@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/aussiegeek/genealogist.svg?branch=master)](https://travis-ci.org/aussiegeek/genealogist)
+[![Inline docs](http://inch-ci.org/github/aussiegeek/genealogist.svg)](http://inch-ci.org/github/aussiegeek/genealogist)
 
 # Genealogist
 
